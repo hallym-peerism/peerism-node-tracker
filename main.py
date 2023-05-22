@@ -48,6 +48,7 @@ def bye():
     return "Bye"
 
 
+@app.route("/")
 @app.route("/nodes")
 def get_nodes():
     return json.dumps(peers, cls=PeersEncoder)
