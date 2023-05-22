@@ -29,21 +29,21 @@ app = Flask(__name__)
 peers: set[Peer] = set()
 
 
-def get_node() -> tuple[str, int]:
+def get_node() -> Peer:
     addr: str = request.args["addr"]
     port: int = int(request.args["port"])
-    return addr, port
+    return Peer(addr, port)
 
 
 @app.route("/hello")
 def hello():
-    peers.add(Peer(*get_node()))
+    peers.add(get_node())
     return "Hello"
 
 
 @app.route("/bye")
 def bye():
-    peers.remove(Peer(*get_node()))
+    peers.remove(get_node())
     return "Bye"
 
 
