@@ -55,13 +55,16 @@ def get_nodes():
 
 def save_nodes():
     with open("nodes.json", "w") as f:
-        json.dump(peers, f)
+        json.dump(peers, f, cls=PeersEncoder)
 
 
 def load_nodes():
-    with open("nodes.json", "r") as f:
-        global peers
-        peers = json.load(f)
+    try:
+        with open("nodes.json", "r") as f:
+            global peers
+            peers = set(json.load(f))
+    except FileNotFoundError:
+        pass
 
 
 if __name__ == '__main__':
