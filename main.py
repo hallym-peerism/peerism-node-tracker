@@ -56,6 +56,7 @@ def get_nodes():
 def save_nodes():
     with open("nodes.json", "w") as f:
         json.dump(peers, f, cls=PeersEncoder)
+    print("nodes information saved successfully")
 
 
 def load_nodes():
