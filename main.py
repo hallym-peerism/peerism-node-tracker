@@ -1,6 +1,7 @@
 from flask import Flask, request
 from dataclasses import dataclass
 import json
+import atexit
 
 
 @dataclass
@@ -52,4 +53,18 @@ def get_nodes():
     return json.dumps(peers, cls=PeersEncoder)
 
 
-app.run("0.0.0.0", 8000)
+def save_nodes():
+    with open("nodes.json", "w") as f:
+        json.dump(peers, f)
+
+
+def load_nodes():
+    with open("nodes.json", "r") as f:
+        global peers
+        peers = json.load(f)
+
+
+if __name__ == '__main__':
+    atexit.register(save_nodes)
+    load_nodes()
+    app.run("0.0.0.0", 8000)
